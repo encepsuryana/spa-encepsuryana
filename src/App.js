@@ -1,40 +1,20 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { ChakraProvider, Grid, theme, Container } from '@chakra-ui/react';
+// import { ColorModeSwitcher } from './ColorModeSwitcher';
+
+import styles from './style/styles.module.css';
+import Header from './components/Header';
+import Posts from './components/Posts';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
+      <Container size="960px">
+        <Grid minH="100vh">
+          <Header />
+          <Posts />
         </Grid>
-      </Box>
+      </Container>
     </ChakraProvider>
   );
 }
