@@ -9,13 +9,14 @@ import styles from '../style/styles.module.css';
 
 function Header() {
   return (
-    <Flex className={styles.header}>
+    <Flex color="white" p={2} className={styles.header}>
       <Box>
         <Heading as="h1" size="lg">
           <HStack spacing="12px">
             <AiOutlineMenu
               style={{
                 opacity: '0.5',
+                cursor: 'pointer',
               }}
             />
             <Text fontSize="md" fontWeight="600">
@@ -28,8 +29,16 @@ function Header() {
       <Box>
         <Heading as="h3" size="lg">
           <HStack spacing="2px">
-            <AiFillHeart />
-            <BiDotsVertical />
+            <AiFillHeart
+              style={{
+                cursor: 'pointer',
+              }}
+            />
+            <BiDotsVertical
+              style={{
+                cursor: 'pointer',
+              }}
+            />
           </HStack>
         </Heading>
       </Box>

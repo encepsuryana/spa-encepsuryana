@@ -1,7 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
 
-//import icons
-import { AiOutlineHeart } from 'react-icons/ai';
 import {
   Box,
   Container,
@@ -36,6 +34,42 @@ export default function Posts() {
     [loading, hasMore]
   );
 
+  //function add to favorite list in localStorage whitout refresh page
+  const addToFavorite = post => {
+    //get condition if favorite list is empty
+    const isEmpty = localStorage.getItem('favorite') === null;
+    //get favorite list from localStorage
+    const favorite = isEmpty
+      ? []
+      : JSON.parse(localStorage.getItem('favorite'));
+    //check if post is already in favorite list
+    const isExist = favorite.some(item => item.id === post.id);
+    //if post is not in favorite list, add it
+    if (!isExist) {
+      favorite.push(post);
+      localStorage.setItem('favorite', JSON.stringify(favorite));
+    }
+  };
+
+  //function remove from favorite list in localStorage
+  const removeFromFavorite = post => {
+    //get condition if favorite list is empty
+    const isEmpty = localStorage.getItem('favorite') === null;
+    //get favorite list from localStorage
+    const favorite = isEmpty
+      ? []
+      : JSON.parse(localStorage.getItem('favorite'));
+    //check if post is already in favorite list
+    const isExist = favorite.some(item => item.id === post.id);
+    //if post is in favorite list, remove it
+    if (isExist) {
+      const newFavorite = favorite.filter(item => item.id !== post.id);
+      localStorage.setItem('favorite', JSON.stringify(newFavorite));
+    }
+  };
+
+  // Render button favorite
+
   return (
     <Container p={2}>
       {/* Render Data */}
@@ -60,15 +94,7 @@ export default function Posts() {
 
             {/* Like Button */}
             <Flex justify="flex-end">
-              <Box>
-                <AiOutlineHeart
-                  style={{
-                    color: '#ff0000',
-                    fontSize: '20px',
-                    cursor: 'pointer',
-                  }}
-                />
-              </Box>
+              <Box>{/* render icon heart */}</Box>
             </Flex>
           </HStack>
         </VStack>

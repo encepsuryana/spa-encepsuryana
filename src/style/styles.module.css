@@ -1,6 +1,5 @@
 :root {
   --primary-color: #106cc8;
-  --primary-text-color: #fff;
 }
 
 * {
@@ -15,7 +14,5 @@
 
 /* Header left and right */
 .header {
-  padding: 0.5rem 1rem;
   background-color: var(--primary-color);
-  color: var(--primary-text-color);
 }
