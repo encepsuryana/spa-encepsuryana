@@ -9,6 +9,15 @@ import {
   Spacer,
   VStack,
   Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Button,
 } from '@chakra-ui/react';
 
 //import Hooks
@@ -16,6 +25,7 @@ import usePosts from '../Hook/usePosts';
 import { ToggleIcons } from './iconFav/ToggleIcons';
 
 export default function Posts() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [query, setQuery] = useState('');
   const [pageNum, setPageNum] = useState(1);
   const { posts, loading, error, hasMore } = usePosts(query, pageNum);
@@ -35,6 +45,13 @@ export default function Posts() {
     [loading, hasMore]
   );
 
+  //get data title and body by id
+  const getPost = id => {
+    onOpen();
+    const post = posts.find(post => post.id === id);
+    return post;
+  };
+
   return (
     <Container p={2}>
       {/* Render Data */}
@@ -48,6 +65,8 @@ export default function Posts() {
           // background color striped odd and even
           backgroundColor={post.id % 2 === 0 ? '#eee' : '#fff'}
           mb="4"
+          onClick={getPost}
+          style={{ cursor: 'pointer' }}
         >
           <HStack>
             <Box>
