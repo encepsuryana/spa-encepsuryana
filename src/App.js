@@ -1,19 +1,31 @@
 import React from 'react';
-import { ChakraProvider, Grid, theme, Container } from '@chakra-ui/react';
+import { ChakraProvider, theme, Container } from '@chakra-ui/react';
 // import { ColorModeSwitcher } from './ColorModeSwitcher';
 
-import styles from './style/styles.module.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+  Link,
+} from 'react-router-dom';
+
+import Favorites from './components/Favorites';
+import Home from './components/Home';
 import Header from './components/Header';
-import Posts from './components/Posts';
+import Dashboard from './components/admin/Dashboard';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <Container size="960px">
-        <Grid minH="100vh">
-          <Header />
-          <Posts />
-        </Grid>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="liked-post" element={<Favorites />} />
+          <Route path="login" element={<Home />} />
+          <Route path="dashboard" element={<Dashboard />} />
+        </Routes>
       </Container>
     </ChakraProvider>
   );

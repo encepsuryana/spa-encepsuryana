@@ -15,4 +15,5 @@
 /* Header left and right */
 .header {
   background-color: var(--primary-color);
+  max-height: 50px;
 }

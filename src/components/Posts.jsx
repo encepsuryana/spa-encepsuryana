@@ -13,6 +13,7 @@ import {
 
 //import Hooks
 import usePosts from '../Hook/usePosts';
+import { ToggleIcons } from './iconFav/ToggleIcons';
 
 export default function Posts() {
   const [query, setQuery] = useState('');
@@ -34,42 +35,6 @@ export default function Posts() {
     [loading, hasMore]
   );
 
-  //function add to favorite list in localStorage whitout refresh page
-  const addToFavorite = post => {
-    //get condition if favorite list is empty
-    const isEmpty = localStorage.getItem('favorite') === null;
-    //get favorite list from localStorage
-    const favorite = isEmpty
-      ? []
-      : JSON.parse(localStorage.getItem('favorite'));
-    //check if post is already in favorite list
-    const isExist = favorite.some(item => item.id === post.id);
-    //if post is not in favorite list, add it
-    if (!isExist) {
-      favorite.push(post);
-      localStorage.setItem('favorite', JSON.stringify(favorite));
-    }
-  };
-
-  //function remove from favorite list in localStorage
-  const removeFromFavorite = post => {
-    //get condition if favorite list is empty
-    const isEmpty = localStorage.getItem('favorite') === null;
-    //get favorite list from localStorage
-    const favorite = isEmpty
-      ? []
-      : JSON.parse(localStorage.getItem('favorite'));
-    //check if post is already in favorite list
-    const isExist = favorite.some(item => item.id === post.id);
-    //if post is in favorite list, remove it
-    if (isExist) {
-      const newFavorite = favorite.filter(item => item.id !== post.id);
-      localStorage.setItem('favorite', JSON.stringify(newFavorite));
-    }
-  };
-
-  // Render button favorite
-
   return (
     <Container p={2}>
       {/* Render Data */}
@@ -80,6 +45,8 @@ export default function Posts() {
           p="4"
           borderWidth="1px"
           borderColor="gray.200"
+          // background color striped odd and even
+          backgroundColor={post.id % 2 === 0 ? '#eee' : '#fff'}
           mb="4"
         >
           <HStack>
@@ -93,9 +60,7 @@ export default function Posts() {
             <Spacer />
 
             {/* Like Button */}
-            <Flex justify="flex-end">
-              <Box>{/* render icon heart */}</Box>
-            </Flex>
+            <ToggleIcons post={post} />
           </HStack>
         </VStack>
       ))}
