@@ -88,11 +88,6 @@ export const ToggleIcons = props => {
     setIcon(props.post);
   }, []);
 
-  //removeFromFavorite
-  React.useEffect(() => {
-    setGrayIcon(props.post);
-  }, [props.removeFromFavorite]);
-
   return (
     <Flex>
       <SwitchIcon

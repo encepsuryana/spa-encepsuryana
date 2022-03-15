@@ -26,45 +26,40 @@ import { BiDotsVertical } from 'react-icons/bi';
 import { AiFillHeart, AiOutlineMenu } from 'react-icons/ai';
 
 import styles from '../style/styles.module.css';
+import axios from 'axios';
 
 //import Login function
 
 function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  //function login with userId and email jsonplaceholder
-  const login = () => {
-    const userId = document.getElementById('userId').value;
-    const email = document.getElementById('email').value;
-    const data = {
-      userId,
-      email,
-    };
+  //sett response data.id
+  const [userId, setUserId] = useState('');
+  const [email, setEmail] = useState('');
 
-    //validate userId and email
+  const login = () => {
+    console.log(userId, email);
+    //validate userId with id and email with email jsonplaceholder
     if (userId === '' || email === '') {
       alert('Please fill in all fields');
     }
-    //validate login userId and email with jsonplaceholder
+    // get data from jsonplaceholder and validate userId and email axios
     else {
-      fetch('https://jsonplaceholder.typicode.com/users', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          if (data.userId === userId && data.email === email) {
+      axios
+        .get(
+          `https://jsonplaceholder.typicode.com/users?id=${userId}&email=${email}`
+        )
+        .then(response => {
+          console.log(response.data);
+          if (response.data.length === 0) {
+            alert('Login Failed');
+          } else {
             alert('Login Success');
-            onClose();
             //save to localStorage
             localStorage.setItem('userId', userId);
             localStorage.setItem('email', email);
-          } else {
-            alert('Login Failed');
+            //close modal
+            onClose();
           }
         });
     }
@@ -136,11 +131,15 @@ function Header() {
                     ) : (
                       <FormControl isRequired>
                         <FormLabel htmlFor="userId">User Id</FormLabel>
-                        <Input id="userId" placeholder="User Id" type="text" />
+                        <Input
+                          onChange={e => setUserId(e.target.value)}
+                          placeholder="User Id"
+                          type="text"
+                        />
 
                         <FormLabel htmlFor="email">Email</FormLabel>
                         <Input
-                          id="email"
+                          onChange={e => setEmail(e.target.value)}
                           placeholder="Email"
                           type="email"
                           required
@@ -153,7 +152,7 @@ function Header() {
                     {/* Validate when userId and email in localStorage */}
                     {localStorage.getItem('userId') &&
                     localStorage.getItem('email') ? (
-                      <Button variantColor="green" onClick={logout}>
+                      <Button colorScheme="red" onClick={logout}>
                         Logout
                       </Button>
                     ) : (

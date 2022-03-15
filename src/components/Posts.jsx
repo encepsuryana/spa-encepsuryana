@@ -45,13 +45,6 @@ export default function Posts() {
     [loading, hasMore]
   );
 
-  //get data title and body by id
-  const getPost = id => {
-    onOpen();
-    const post = posts.find(post => post.id === id);
-    return post;
-  };
-
   return (
     <Container p={2}>
       {/* Render Data */}
@@ -65,7 +58,6 @@ export default function Posts() {
           // background color striped odd and even
           backgroundColor={post.id % 2 === 0 ? '#eee' : '#fff'}
           mb="4"
-          onClick={getPost}
           style={{ cursor: 'pointer' }}
         >
           <HStack>
